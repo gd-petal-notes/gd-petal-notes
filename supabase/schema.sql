@@ -9,7 +9,7 @@ create table if not exists public.notes (
                 and array_length(regexp_split_to_array(btrim(body), '\s+'), 1) <= 500
               ),
   author      text not null default 'Anonymous' check (char_length(author) between 1 and 30),
-  approved    boolean not null default false,
+  approved    boolean not null default true,
   created_at  timestamptz not null default now()
 );
 
@@ -24,15 +24,20 @@ create policy "read approved notes" on public.notes
   for select to anon, authenticated
   using (approved = true);
 
--- Public can submit notes, but they always start unapproved.
+-- Public can submit notes; they appear on the wall right away.
 drop policy if exists "submit unapproved notes" on public.notes;
-create policy "submit unapproved notes" on public.notes
+drop policy if exists "submit notes" on public.notes;
+create policy "submit notes" on public.notes
   for insert to anon, authenticated
-  with check (approved = false);
+  with check (approved = true);
 
--- No update/delete policies: moderation happens in the Supabase dashboard.
+-- No update/delete policies. To hide a note, untick `approved`
+-- (or delete the row) in the Supabase dashboard.
 
 -- The public may only set these columns when submitting.
 revoke all on public.notes from anon, authenticated;
 grant select on public.notes to anon, authenticated;
 grant insert (topic, body, author) on public.notes to anon, authenticated;
+
+-- Existing databases: make new notes publish immediately.
+alter table public.notes alter column approved set default true;

@@ -5,7 +5,8 @@
 
 // ---- SUPABASE ----
 // The publishable key is public by design; row-level security on the `notes`
-// table only allows reading approved notes and submitting unapproved ones.
+// table lets the public read approved notes and submit new ones (published
+// immediately; hide a note by unticking `approved` in the Supabase dashboard).
 const SUPABASE_URL = "https://uqlxpieczzplxtmvfpgw.supabase.co";
 const SUPABASE_KEY = "sb_publishable_dTpv3U9pnSwRUIzULl0JWg_cWw3pUJT";
 const API = SUPABASE_URL + "/rest/v1/notes";
@@ -112,8 +113,9 @@ $("#send").onclick = async () => {
     await submitNote({ topic: t, body: m, author: $("#nm").value.trim() || "Anonymous" });
     ["#topic", "#msg", "#nm"].forEach(s => $(s).value = "");
     preview();
-    toast("Thank you! Your note will appear once it has been reviewed.");
+    toast("Thank you! Your note is on the wall.");
     location.hash = "#/home";
+    loadNotes();
   } catch (e) {
     console.error("Could not send note", e);
     toast("Sorry, your note could not be sent. Please try again.");
