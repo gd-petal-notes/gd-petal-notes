@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Petal Notes · A GDC Awareness Project</title>
+  <meta name="description"
+    content="A safe, quiet space of kind words written by our community for anyone affected by breast cancer. Created by GDC · Graphic Design Club.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Inter:wght@400;500;600&family=Caveat:wght@600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header>
+    <div class="bar">
+      <a class="brand" href="#/home" aria-label="Petal Notes home">
+        <img class="logo-img" src="GDlogo_2_whtp@10x-whitetext.png" alt="GDC Graphic Design Club logo">
+        <span><b>Petal Notes</b><small>by GDC · Graphic Design Club</small></span>
+      </a>
+      <nav aria-label="Main">
+        <a href="#/home" data-nav="home">Notes Wall</a>
+        <a href="#/write" data-nav="write">Write a Note</a>
+        <a href="#/about" data-nav="about">About &amp; Support</a>
+      </nav>
+      <button class="icon-btn" id="theme" aria-label="Toggle light or dark mode">Dark</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- PAGE 1: HOME -->
+    <section class="page" id="p-home">
+      <div class="hero">
+        <span class="pill">Breast Cancer Awareness</span>
+        <div class="script">crocheted together with kindness</div>
+        <h1>A little kindness, whenever you need it.</h1>
+        <p>A safe, quiet space of kind words written by our community for anyone affected by breast cancer. Read at your
+          own pace, anywhere, any time.</p>
+        <a class="btn" href="#/write">Leave a kind note</a>
+      </div>
+
+      <aside class="panel facts-panel" aria-labelledby="facts-h">
+        <div class="facts-header">
+          <h2 id="facts-h">Know the facts</h2>
+          <div class="facts-nav" aria-label="Carousel controls">
+            <button class="facts-arrow" id="facts-prev" aria-label="Previous fact">&#8592;</button>
+            <button class="facts-arrow" id="facts-next" aria-label="Next fact">&#8594;</button>
+          </div>
+        </div>
+
+        <div class="facts-carousel" id="facts-carousel" aria-live="polite">
+          <div class="facts-track" id="facts-track">
+            <div class="fact" role="group" aria-label="Fact 1 of 3">
+              <h3>Global reach</h3>
+              <p>Breast cancer is the most common cancer in women worldwide, with roughly 2.3 million new cases in 2022.
+              </p>
+            </div>
+            <div class="fact" role="group" aria-label="Fact 2 of 3">
+              <h3>Early detection</h3>
+              <p>Finding breast cancer early gives more treatment options and better outcomes. Talk to a doctor about
+                screening.</p>
+            </div>
+            <div class="fact" role="group" aria-label="Fact 3 of 3">
+              <h3>Not only women</h3>
+              <p>Men can develop breast cancer too, though it is much rarer. Everyone should know the signs.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="facts-footer">
+          <div class="facts-dots" id="facts-dots" aria-hidden="true"></div>
+        </div>
+
+        <p class="src">Sources: World Health Organization · NHS · American Cancer Society. <a href="#/about">More
+            resources</a></p>
+      </aside>
+
+      <div class="canvas-head">
+        <div>
+          <h2>The Notes Wall</h2><span style="color:var(--muted);font-size:.9rem">Tap a note to read it in full.</span>
+        </div>
+        <a class="btn ghost" href="#/write">+ Add yours</a>
+      </div>
+      <div class="canvas">
+        <div class="grid" id="wall" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- PAGE 2: WRITE -->
+    <section class="page" id="p-write">
+      <h1>Write a kind note</h1>
+      <p style="color:var(--muted);max-width:640px">Your words may be read by someone having a very hard day. Be gentle,
+        be honest, be kind. Notes are reviewed before appearing on the wall.</p>
+      <div class="form">
+        <div>
+          <label for="topic">Topic</label>
+          <input id="topic" maxlength="60" placeholder="e.g. You are stronger than you know">
+          <div class="hint"><span>Shown as the note's title</span><span id="tc">0/60</span></div>
+        </div>
+        <div>
+          <label for="msg">Your message</label>
+          <textarea id="msg" placeholder="Write from the heart..."></textarea>
+          <div class="hint"><span>Up to 500 words</span><span id="wc">0/500 words</span></div>
+        </div>
+        <div>
+          <label for="nm">Signed as (optional)</label>
+          <input id="nm" maxlength="30" placeholder="Anonymous">
+        </div>
+        <div class="preview">
+          <b style="font-size:.85rem">How it will appear on the wall</b>
+          <div class="note" id="pv"></div>
+        </div>
+        <div><button class="btn" id="send">Send note</button></div>
+      </div>
+    </section>
+
+    <!-- PAGE 3: ABOUT -->
+    <section class="page" id="p-about">
+      <h1>About &amp; Support</h1>
+      <div class="cols">
+        <div class="card">
+          <h2>Why Petal Notes?</h2>
+          <p>Created by the Graphic Design Club (GDC) for our breast cancer awareness event. Petal Notes is a calm
+            corner of the internet where people can leave kind words, and where anyone affected can come to read them,
+            privately and any time.</p>
+        </div>
+        <div class="card">
+          <h2>Self-check basics</h2>
+          <ul>
+            <li>Know how your breasts normally look and feel</li>
+            <li>Report any changes to a healthcare professional</li>
+            <li>Ask your doctor when screening is right for you</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>Trusted sources</h2>
+          <ul>
+            <li>World Health Organization (who.int)</li>
+            <li>NHS (nhs.uk)</li>
+            <li>American Cancer Society (cancer.org)</li>
+            <li>Breastcancer.org</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>Need to talk?</h2>
+          <p>If you're struggling, please reach out to your doctor, a local cancer support organisation, or someone you
+            trust. You don't have to carry this alone.</p>
+        </div>
+      </div>
+      <p class="src">This site shares general awareness information and is not medical advice.</p>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      Designed with care by <b>GDC · Graphic Design Club</b><br>
+      Petal Notes · Breast Cancer Awareness Event
+    </div>
+  </footer>
+
+  <dialog id="dlg" aria-labelledby="dt">
+    <div class="dlg">
+      <h2 id="dt"></h2>
+      <div class="meta" id="dm"></div>
+      <div class="body" id="db"></div>
+      <button class="btn" id="close">Close</button>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
