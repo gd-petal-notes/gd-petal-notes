@@ -135,13 +135,54 @@ function route() {
     if (a.dataset.nav === pg) a.setAttribute("aria-current", "page");
   });
   window.scrollTo(0, 0);
+  const nm = document.getElementById("nav-menu");
+  const bg = document.getElementById("burger");
+  if (nm) nm.classList.remove("open");
+  if (bg) bg.setAttribute("aria-expanded", "false");
 }
 addEventListener("hashchange", route);
+
+// ---- MOBILE NAV ----
+(function () {
+  const burgerBtn = document.getElementById("burger");
+  const navMenu   = document.getElementById("nav-menu");
+  if (!burgerBtn || !navMenu) return;
+
+  function closeMenu() {
+    navMenu.classList.remove("open");
+    burgerBtn.setAttribute("aria-expanded", "false");
+  }
+
+  burgerBtn.addEventListener("click", e => {
+    e.stopPropagation();
+    const isOpen = navMenu.classList.toggle("open");
+    burgerBtn.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  navMenu.querySelectorAll("a").forEach(a => {
+    a.addEventListener("click", closeMenu);
+  });
+
+  document.addEventListener("click", e => {
+    if (!navMenu.contains(e.target) && !burgerBtn.contains(e.target)) {
+      closeMenu();
+    }
+  });
+
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && navMenu.classList.contains("open")) {
+      closeMenu();
+      burgerBtn.focus();
+    }
+  });
+})();
 
 // ---- THEME ----
 function setTheme(t) {
   document.documentElement.setAttribute("data-theme", t);
-  $("#theme").textContent = t === "dark" ? "Light" : "Dark";
+  const span = $("#theme span");
+  if (span) span.textContent = t === "dark" ? "Light" : "Dark";
+  else $("#theme").textContent = t === "dark" ? "Light" : "Dark";
   try { localStorage.setItem("pn-theme", t); } catch (e) {}
 }
 

@@ -12,6 +12,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Inter:wght@400;500;600&family=Caveat:wght@600&display=swap"
     rel="stylesheet">
+  <link rel="icon" type="image/png" href="GDlogo_2_whtp@10x-whitetext.png">
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -23,12 +24,16 @@
         <img class="logo-img" src="GDlogo_2_whtp@10x-whitetext.png" alt="GDC Graphic Design Club logo">
         <span><b>Petal Notes</b><small>by GDC · Graphic Design Club</small></span>
       </a>
-      <nav aria-label="Main">
-        <a href="#/home" data-nav="home">Notes Wall</a>
-        <a href="#/write" data-nav="write">Write a Note</a>
-        <a href="#/about" data-nav="about">About &amp; Support</a>
+      <nav id="nav-menu" aria-label="Main">
+        <a href="#/home" data-nav="home"><img class="nav-icon" src="note.png" alt="">Notes Wall</a>
+        <a href="#/write" data-nav="write"><img class="nav-icon" src="write.png" alt="">Write a Note</a>
+        <a href="#/about" data-nav="about"><img class="nav-icon" src="info.png" alt="">About &amp; Support</a>
       </nav>
-      <button class="icon-btn" id="theme" aria-label="Toggle light or dark mode">Dark</button>
+      <button class="icon-btn" id="theme" aria-label="Toggle light or dark mode"><img class="nav-icon" src="light.png"
+          alt=""><span>Dark</span></button>
+      <button class="burger-btn" id="burger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-menu">
+        <img class="burger-icon" src="burger.png" alt="">
+      </button>
     </div>
   </header>
 
@@ -49,26 +54,41 @@
         <div class="facts-header">
           <h2 id="facts-h">Know the facts</h2>
           <div class="facts-nav" aria-label="Carousel controls">
-            <button class="facts-arrow" id="facts-prev" aria-label="Previous fact">&#8592;</button>
-            <button class="facts-arrow" id="facts-next" aria-label="Next fact">&#8594;</button>
+            <button class="facts-arrow" id="facts-prev" aria-label="Previous fact" title="Previous fact">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+            </button>
+            <button class="facts-arrow" id="facts-next" aria-label="Next fact" title="Next fact">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </button>
           </div>
         </div>
 
         <div class="facts-carousel" id="facts-carousel" aria-live="polite">
           <div class="facts-track" id="facts-track">
             <div class="fact" role="group" aria-label="Fact 1 of 3">
+              <span class="fact-tag">Global Impact</span>
               <h3>Global reach</h3>
-              <p>Breast cancer is the most common cancer in women worldwide, with roughly 2.3 million new cases in 2022.
-              </p>
+              <p>Breast cancer is the most common cancer in women worldwide, with roughly <strong>2.3 million</strong>
+                new cases diagnosed each year.</p>
             </div>
             <div class="fact" role="group" aria-label="Fact 2 of 3">
+              <span class="fact-tag">Health & Prevention</span>
               <h3>Early detection</h3>
-              <p>Finding breast cancer early gives more treatment options and better outcomes. Talk to a doctor about
-                screening.</p>
+              <p>Finding breast cancer early provides more treatment options and significantly better outcomes. Talk to
+                a doctor about <strong>routine screening</strong>.</p>
             </div>
             <div class="fact" role="group" aria-label="Fact 3 of 3">
+              <span class="fact-tag">Important Knowledge</span>
               <h3>Not only women</h3>
-              <p>Men can develop breast cancer too, though it is much rarer. Everyone should know the signs.</p>
+              <p>Men can develop breast cancer too, though it is much rarer. Everyone of all backgrounds should
+                <strong>know the signs</strong>.
+              </p>
             </div>
           </div>
         </div>
@@ -129,14 +149,6 @@
           <p>Created by the Graphic Design Club (GDC) for our breast cancer awareness event. Petal Notes is a calm
             corner of the internet where people can leave kind words, and where anyone affected can come to read them,
             privately and any time.</p>
-        </div>
-        <div class="card">
-          <h2>Self-check basics</h2>
-          <ul>
-            <li>Know how your breasts normally look and feel</li>
-            <li>Report any changes to a healthcare professional</li>
-            <li>Ask your doctor when screening is right for you</li>
-          </ul>
         </div>
         <div class="card">
           <h2>Trusted sources</h2>
