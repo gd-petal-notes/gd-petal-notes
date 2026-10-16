@@ -493,6 +493,14 @@ nav a[aria-current="page"] {
   column-gap: 16px;
 }
 
+.grid .empty {
+  margin: 0;
+  padding: 24px 8px;
+  color: var(--muted);
+  text-align: center;
+  column-span: all;
+}
+
 .note {
   break-inside: avoid;
   margin: 0 0 16px;

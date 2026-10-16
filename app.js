@@ -3,45 +3,32 @@
 //  GDC · Graphic Design Club · Breast Cancer Awareness
 // ============================================================
 
-// ---- MOCK DATA: replace with Supabase select from a `notes` table ----
-let notes = [
-  {
-    id: 1,
-    topic: "You are not alone",
-    author: "Maya",
-    body: "I wanted to write this for whoever is reading it right now. There will be days when everything feels heavy, and that is okay. You do not have to be brave every single minute. Rest when you need to, cry when you need to, and know that so many people are thinking of you and cheering for you, even strangers like me.\n\nTake it one small step at a time. Today, just getting through is enough."
-  },
-  {
-    id: 2,
-    topic: "Soft days are allowed",
-    author: "Anonymous",
-    body: "Some days you will feel strong and some days you will just want a blanket and tea. Both are valid. Being gentle with yourself is not giving up, it is part of healing."
-  },
-  {
-    id: 3,
-    topic: "My mother's strength",
-    author: "Sara",
-    body: "My mum went through this and she taught me that courage is quiet. It looks like showing up to appointments, laughing at silly shows, and letting people help. She is healthy today, and she asks me to tell everyone: hope is real. Please hold on to it, even when it flickers. Your story is still being written and it has so many good pages left."
-  },
-  {
-    id: 4,
-    topic: "Thinking of you",
-    author: "GDC Member",
-    body: "Just a little pink hug from us."
-  },
-  {
-    id: 5,
-    topic: "A letter to the fighter",
-    author: "Noor",
-    body: "Dear fighter, you are more than a diagnosis. You are a daughter, a friend, a dreamer, a person with a whole life full of colour. I hope today brings you one small joy: a good song, a warm drink, a message from someone who loves you. We believe in you. We are in your corner, always."
-  },
-  {
-    id: 6,
-    topic: "Check in, check up",
-    author: "Anonymous",
-    body: "A reminder to everyone reading: be kind to yourself, and please do not skip your check-ups. Early awareness saves lives. And to anyone going through treatment, you are admired more than you know."
+// ---- SUPABASE ----
+// The publishable key is public by design; row-level security on the `notes`
+// table only allows reading approved notes and submitting unapproved ones.
+const SUPABASE_URL = "https://uqlxpieczzplxtmvfpgw.supabase.co";
+const SUPABASE_KEY = "sb_publishable_dTpv3U9pnSwRUIzULl0JWg_cWw3pUJT";
+const API = SUPABASE_URL + "/rest/v1/notes";
+const HEADERS = { apikey: SUPABASE_KEY, "Content-Type": "application/json" };
+
+let notes = [];
+
+async function loadNotes() {
+  try {
+    const r = await fetch(API + "?select=id,topic,body,author&order=created_at.desc&limit=500", { headers: HEADERS });
+    if (!r.ok) throw new Error(r.status);
+    notes = await r.json();
+  } catch (e) {
+    console.error("Could not load notes", e);
+    notes = null;
   }
-];
+  renderWall();
+}
+
+async function submitNote(note) {
+  const r = await fetch(API, { method: "POST", headers: { ...HEADERS, Prefer: "return=minimal" }, body: JSON.stringify(note) });
+  if (!r.ok) throw new Error(r.status);
+}
 
 // ---- HELPERS ----
 const $ = s => document.querySelector(s);
@@ -63,6 +50,13 @@ const cardHTML = n => {
 function renderWall() {
   const w = $("#wall");
   w.innerHTML = "";
+  if (!notes || !notes.length) {
+    const p = document.createElement("p");
+    p.className = "empty";
+    p.textContent = notes ? "No notes yet. Be the first to leave a kind word." : "Notes could not be loaded right now. Please try again in a moment.";
+    w.appendChild(p);
+    return;
+  }
   notes.forEach(n => {
     const b = document.createElement("button");
     b.className = "note";
@@ -107,17 +101,26 @@ function toast(t) {
 }
 
 // ---- SUBMIT ----
-$("#send").onclick = () => {
+$("#send").onclick = async () => {
   const t = $("#topic").value.trim(), m = $("#msg").value.trim();
   if (!t || !m) return toast("Please add a topic and a message");
   if (words(m).length > 500) return toast("Please keep it under 500 words");
-  // ---- Replace with Supabase insert into `notes` (approved:false until moderated) ----
-  notes.unshift({ id: Date.now(), topic: t, body: m, author: $("#nm").value.trim() || "Anonymous" });
-  renderWall();
-  ["#topic", "#msg", "#nm"].forEach(s => $(s).value = "");
-  preview();
-  toast("Thank you! Your note is on its way.");
-  location.hash = "#/home";
+  const btn = $("#send");
+  btn.disabled = true;
+  btn.textContent = "Sending...";
+  try {
+    await submitNote({ topic: t, body: m, author: $("#nm").value.trim() || "Anonymous" });
+    ["#topic", "#msg", "#nm"].forEach(s => $(s).value = "");
+    preview();
+    toast("Thank you! Your note will appear once it has been reviewed.");
+    location.hash = "#/home";
+  } catch (e) {
+    console.error("Could not send note", e);
+    toast("Sorry, your note could not be sent. Please try again.");
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Send note";
+  }
 };
 
 // ---- ROUTER ----
@@ -232,6 +235,6 @@ $("#theme").onclick = () => setTheme(document.documentElement.getAttribute("data
 })();
 
 // ---- INIT ----
-renderWall();
+loadNotes();
 preview();
 route();
