@@ -314,8 +314,10 @@ nav a[aria-current="page"]::after {
   }
 }
 
-:root[data-theme="dark"] nav#nav-menu {
-  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+@media (max-width: 768px) {
+  :root[data-theme="dark"] nav#nav-menu {
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+  }
 }
 
 @media (max-width: 480px) {
