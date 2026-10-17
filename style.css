@@ -112,6 +112,8 @@ a {
 
 main {
   flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 /* ---- HEADER ---- */
@@ -1031,6 +1033,14 @@ textarea {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 18px;
+}
+
+/* About page: vertically center its content in the available space */
+#p-about.on {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
 }
 
 .card {
