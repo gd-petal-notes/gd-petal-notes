@@ -857,6 +857,11 @@ nav a[aria-current="page"]::after {
   margin: 36px 0 14px;
 }
 
+.canvas-head span {
+  display: block;
+  margin-top: 2px;
+}
+
 .canvas {
   background: var(--surface2);
   border: 1px dashed var(--primary);
