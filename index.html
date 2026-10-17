@@ -168,6 +168,45 @@
       <p class="src">This site shares general awareness information and is not medical advice.</p>
     </section>
 
+    <!-- PAGE 4: MODERATE (not linked in the nav) -->
+    <section class="page" id="p-moderate">
+      <h1>Moderation</h1>
+
+      <p id="mod-loading" class="mod-muted">Loading...</p>
+
+      <div id="mod-signin" class="form mod-narrow" hidden>
+        <p class="mod-muted">For Petal Notes moderators only. Enter your email and we'll send you a sign-in link.</p>
+        <div>
+          <label for="mod-email">Email</label>
+          <input id="mod-email" type="email" autocomplete="email" placeholder="you@gmail.com">
+        </div>
+        <div><button class="btn" id="mod-send">Send sign-in link</button></div>
+        <p id="mod-sent" class="mod-muted" role="status" hidden></p>
+      </div>
+
+      <div id="mod-denied" class="mod-narrow" hidden>
+        <p><b id="mod-who2"></b> isn't on the moderator list. Ask an organiser to add you.</p>
+        <button class="btn ghost" id="mod-signout2">Sign out</button>
+      </div>
+
+      <div id="mod-panel" hidden>
+        <div class="mod-bar">
+          <span class="mod-muted">Signed in as <b id="mod-who"></b></span>
+          <span>
+            <button class="btn small ghost" id="mod-refresh">Refresh</button>
+            <button class="btn small ghost" id="mod-signout">Sign out</button>
+          </span>
+        </div>
+
+        <h2>Waiting for review <span class="mod-count" id="mod-held-count">0</span></h2>
+        <p class="mod-muted">Notes caught by the word filter, or hidden by a moderator. They are not on the wall.</p>
+        <div class="mod-list" id="mod-held"></div>
+
+        <h2>On the wall <span class="mod-count" id="mod-live-count">0</span></h2>
+        <div class="mod-list" id="mod-live"></div>
+      </div>
+    </section>
+
   </main>
 
   <footer>
@@ -189,6 +228,7 @@
   <div class="toast" id="toast" role="status"></div>
 
   <script src="app.js"></script>
+  <script src="moderate.js"></script>
 </body>
 
 </html>

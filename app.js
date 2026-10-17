@@ -5,8 +5,8 @@
 
 // ---- SUPABASE ----
 // The publishable key is public by design; row-level security on the `notes`
-// table lets the public read approved notes and submit new ones (published
-// immediately; hide a note by unticking `approved` in the Supabase dashboard).
+// table lets the public read approved notes and submit new ones. A word
+// filter in the database holds suspicious notes for review (see moderate.js).
 const SUPABASE_URL = "https://uqlxpieczzplxtmvfpgw.supabase.co";
 const SUPABASE_KEY = "sb_publishable_dTpv3U9pnSwRUIzULl0JWg_cWw3pUJT";
 const API = SUPABASE_URL + "/rest/v1/notes";
@@ -113,7 +113,7 @@ $("#send").onclick = async () => {
     await submitNote({ topic: t, body: m, author: $("#nm").value.trim() || "Anonymous" });
     ["#topic", "#msg", "#nm"].forEach(s => $(s).value = "");
     preview();
-    toast("Thank you! Your note is on the wall.");
+    toast("Thank you for your kind words!");
     location.hash = "#/home";
     loadNotes();
   } catch (e) {
@@ -128,7 +128,7 @@ $("#send").onclick = async () => {
 // ---- ROUTER ----
 function route() {
   const p = (location.hash.replace("#/", "") || "home");
-  const pg = ["home", "write", "about"].includes(p) ? p : "home";
+  const pg = ["home", "write", "about", "moderate"].includes(p) ? p : "home";
   document.querySelectorAll(".page").forEach(e => e.classList.toggle("on", e.id === "p-" + pg));
   document.querySelectorAll("[data-nav]").forEach(a => {
     a.removeAttribute("aria-current");
